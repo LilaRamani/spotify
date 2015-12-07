@@ -4,8 +4,8 @@ $(document).ready( function() {
             type:"POST",
             headers:
             {
-                'Authorization', 'Basic YTdkY2YxYTZkNDljNDdkMGI0ZGQyNjRkN2RhODgxMDk6IDcxZjlkNTdjNzYwNTQ0Y2VhMzc2MWQxM2E1YmFkZmM4DQo=',
-                'Content-Type':'application/json'
+                'Authorization': 'Basic YTdkY2YxYTZkNDljNDdkMGI0ZGQyNjRkN2RhODgxMDk6IDcxZjlkNTdjNzYwNTQ0Y2VhMzc2MWQxM2E1YmFkZmM4DQo=',
+                'Content-Type': 'application/json'
             },
             url: "https://accounts.spotify.com/api/token",
             dataType: 'json',
