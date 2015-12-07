@@ -10,7 +10,7 @@ $(document).ready( function() {
             },
             url: "https://accounts.spotify.com/api/token",
             dataType: 'json',
-            data: {grant_type: 'client_credentials'}
+            data: {grant_type: 'client_credentials'},
             success: function(msg) {
             	 console.log(data);
             }
