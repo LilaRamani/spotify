@@ -1,9 +1,11 @@
 $(document).ready( function() {
 	console.log("hi");
+	var client_id = 'a7dcf1a6d49c47d0b4dd264d7da88109'; // Your client id
+	var client_secret = '71f9d57c760544cea3761d13a5badfc8'; // Your client secret
 	$.ajax({
             type:"POST",
             headers: {
-                'Authorization':'Basic YTdkY2YxYTZkNDljNDdkMGI0ZGQyNjRkN2RhODgxMDk6IDcxZjlkNTdjNzYwNTQ0Y2VhMzc2MWQxM2E1YmFkZmM4DQo=',
+                'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64')),
                 'Content-Type':'application/json'
             },
             url: "https://accounts.spotify.com/api/token",
