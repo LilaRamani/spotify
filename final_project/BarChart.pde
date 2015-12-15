@@ -12,7 +12,7 @@ class BarChart {
   private void clearRegion() {
     fill(255);
     stroke(255);
-    rect(0, 0, width, y); 
+    rect(0, 0, .5 * width, height); 
   }
   
   private void drawAxes() {
@@ -21,7 +21,7 @@ class BarChart {
     line(x, (height - margin), (.5 * width), (height - margin));
   }
   
-  void display(ArrayList<Country> c) {
+  void display(ArrayList<Country> c, HashMap<String,Color> nats) {
     clearRegion();
     drawAxes();
     
@@ -31,25 +31,37 @@ class BarChart {
         max = c.get(m).total_streams;
       }
     }
+    //println("MAX = " + max);
+    //Display y axis marks
+    int marker = 20000000;
+    for (float j = 1; j <= 7; j++) {
+      textSize(10);
+      fill(0);
+      float thing = j/7;
+      text(marker, 2, height - ((height - margin -y) * thing));
+      marker += 20000000;
+    }
     
-    java.util.Collections.sort(c);
     
-    float padding = width * .01;
+    //java.util.Collections.sort(c);
+    
+    float padding = width * .002;
     stroke(0);
     //fill(color(100,200,50));
     for (int i = 0; i < c.size(); i++) {
       float barW = (.5 * width) / c.size();
       float curr_y = (height - margin);
-      fill(color(100,200,50));
+      float barX = x + (i * barW) + padding;
       for (String n : c.get(i).nationalities.keys()) {
+        fill(nats.get(n).c);
         float barH = (c.get(i).nationalities.get(n)/max) * ((height - margin) - margin);
-        float barX = x + (i * barW) + padding;
         float barY = curr_y - barH;
         rect(barX, barY, barW - padding, barH);
         curr_y -= barH;
       }
+      c.get(i).setX(barX, barX + barW - padding);
       float currMidPoint = x + (i * barW) + (barW/4);
-      textSize(12);
+      textSize(10);
       fill(0);
       pushMatrix();
       translate(currMidPoint, height - 19);
