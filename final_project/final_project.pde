@@ -63,6 +63,7 @@ void setup() {
   frame.setResizable(true);
   barchart = new BarChart(60, 10, .6 * width, height);
   bg = new BubbleGraph(radius_buffer);
+  most_domestic_music();
   //java.util.Collections.shuffle(artists);
 }
 
@@ -139,13 +140,14 @@ void hover() {
     Color val = (Color)name.getValue();
     if (current == val.c) {
       found = true;
-      textSize(16);
+      textSize(24);
       fill(0);
       String temp = (String)name.getKey();
       if (artist_clicked == -1) {
         for (int i = 0; i < countries.size(); i++) {
           if (mouseX > countries.get(i).x1 && mouseX < countries.get(i).x2) {
-            text(temp + ", " + countries.get(i).nationalities.get(temp), 120, 30);
+            textAlign(CENTER);
+            text(temp + ", " + countries.get(i).nationalities.get(temp), .25 * width, 30);
             makeArtistsGrey(countries.get(i), temp);
           }
         }
@@ -165,9 +167,10 @@ void hover() {
   
   for (int j = 0; j < artists.size(); j++) {
     if (artists.get(j).in_bounds()) {
-      textSize(16);
+      textSize(24);
+      textAlign(CENTER);
       fill(0);
-      text(artists.get(j).name + ", " + artists.get(j).total_streams, 120, 30);
+      text(artists.get(j).name + ", " + artists.get(j).total_streams, .25 * width, 30);
     }
   }
 }
@@ -178,6 +181,22 @@ void makeArtistsGrey(Country c, String nat) {
       artists.get(i).is_grey = true;
     } else {
       artists.get(i).is_grey = false;
+    }
+  }
+}
+
+void most_domestic_music() {
+  String most = "";
+  float max = 0;
+  for (int i = 0; i < countries.size(); i++) {
+    for (String n : countries.get(i).nationalities.keys()) {
+      if (n.equals(countries.get(i).id)) {
+        println("HERE");
+        if (((float)countries.get(i).nationalities.get(n)/countries.get(i).total_streams) > max) {
+          max = countries.get(i).nationalities.get(n)/countries.get(i).total_streams;
+          most = n;
+        }
+      }
     }
   }
 }
