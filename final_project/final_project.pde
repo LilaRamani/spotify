@@ -17,8 +17,10 @@ Boolean topchart_screen = false;
 Boolean artist_screen = false;
 PImage icon;
 PImage icon2;
+PImage icon3;
 String photo = "../spotify.png";
 String justin = "../justin-bieber.png";
+String spain = "../spain.png";
 
 Color [] colors = {
   new Color(color(141,211,199)),
@@ -58,6 +60,7 @@ void setup() {
   
   icon = loadImage(photo);
   icon2 = loadImage(justin);
+  icon3 = loadImage(spain);
   
   loadStrings();
   frame.setResizable(true);
@@ -77,7 +80,12 @@ void draw() {
   } else if (artist_screen) {
     display_artist_screen();
   } else {
-  
+    //labels
+    textSize(50);
+    textAlign(CENTER);
+    fill(100, 100, 100, 240);
+    text("Artists", 4*width/5, height/2);
+    text("Charts", width/4, height/2);
     if (artist_clicked == -1) {
       barchart.display(countries, nationalities);
     } else {
@@ -170,7 +178,7 @@ void hover() {
       textSize(24);
       textAlign(CENTER);
       fill(0);
-      text(artists.get(j).name + ", " + artists.get(j).total_streams, .25 * width, 30);
+      text(artists.get(j).name + ", " + artists.get(j).total_streams, 4*width/5, height -30);
     }
   }
 }
@@ -290,6 +298,8 @@ void display_topchart_screen() {
     text(text3, width/2, 2*height/3);
     String text4 = "USA";
     text(text4, width/2, 2*height/3 + 30);  
+    imageMode(CENTER);
+    image(icon2, width/2, height/2);  
 }
 
 void display_artist_screen() {
@@ -305,5 +315,5 @@ void display_artist_screen() {
     String text4 = "France";
     text(text4, width/2, 2*height/3 + 30); 
     imageMode(CENTER);
-    image(icon2, width/2, height/2);  
+    image(icon3, width/2, height/2);  
 }
