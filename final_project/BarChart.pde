@@ -19,10 +19,13 @@ class BarChart {
     stroke(0);
     line(x, y, x, (height - margin));
     line(x, (height - margin), (.55 * width), (height - margin));
+    strokeWeight(3);
+    line(.597 * width, 0, .597 * width, height);
+    strokeWeight(1);
   }
   
   void display(ArrayList<Country> c, HashMap<String,Color> nats) {
-    clearRegion();
+    //clearRegion();
     drawAxes();
     textAlign(BASELINE);
     float max = 0;
@@ -72,7 +75,7 @@ class BarChart {
   }
   
   void display(Artist a, HashMap<String,Color> n) {
-    clearRegion();
+    //clearRegion();
     drawAxes();
     
     a.streams.sortKeys();

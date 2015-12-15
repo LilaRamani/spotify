@@ -8,7 +8,7 @@ HashMap<String, Color> nationalities = new HashMap<String, Color>();
 float total_w = -1, total_h = -1;
 int artist_clicked;
 int buffer = 10;
-int radius_buffer = 10000;
+int radius_buffer = 15000;
 color highlight = color(255, 255, 153);
 color temp;
 Boolean show_key = false;
@@ -83,9 +83,9 @@ void draw() {
     //labels
     textSize(50);
     textAlign(CENTER);
-    fill(100, 100, 100, 240);
+    fill(100, 100, 100, 200);
     text("Artists", 4*width/5, height/2);
-    text("Charts", width/4, height/2);
+    text("Charts", .3 * width, .5 * height);
     if (artist_clicked == -1) {
       barchart.display(countries, nationalities);
     } else {
@@ -107,8 +107,6 @@ void mouseClicked() {
         artist_clicked = j;
       }
     }
-    
-    
     
     for (int i = 0; i < countries.size(); i++) {
       if (mouseX > countries.get(i).x1 && mouseX < countries.get(i).x2) {
@@ -138,6 +136,9 @@ void keyPressed() {
   }
   if (key == 97) {
      artist_screen = true;
+  }
+  if (key == 99) {
+      intro = true;
   }
 }
 
@@ -178,7 +179,7 @@ void hover() {
       textSize(24);
       textAlign(CENTER);
       fill(0);
-      text(artists.get(j).name + ", " + artists.get(j).total_streams, 4*width/5, height -30);
+      text(artists.get(j).name + ", " + artists.get(j).total_streams, 4*width/5, height -20);
     }
   }
 }
@@ -299,7 +300,7 @@ void display_topchart_screen() {
     String text4 = "USA";
     text(text4, width/2, 2*height/3 + 30);  
     imageMode(CENTER);
-    image(icon2, width/2, height/2);  
+    image(icon3, width/2, height/2);  
 }
 
 void display_artist_screen() {
@@ -315,5 +316,5 @@ void display_artist_screen() {
     String text4 = "France";
     text(text4, width/2, 2*height/3 + 30); 
     imageMode(CENTER);
-    image(icon3, width/2, height/2);  
+    image(icon2, width/2, height/2);  
 }

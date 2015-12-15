@@ -21,7 +21,7 @@ class BubbleGraph {
     min_w = .6*width;
     min_h = 0;
     max_w = width;
-    max_h = height - 150;
+    max_h = height - 50;
     Boolean fits = false;
     
     
