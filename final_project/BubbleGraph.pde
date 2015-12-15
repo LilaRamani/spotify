@@ -11,6 +11,12 @@ class BubbleGraph {
     first_time = true;
   }
   
+  void clearRegion() {
+    background(255);
+    stroke(255);
+    rect(.6*width, 0, width, height);
+  }
+  
   void display(ArrayList<Artist> a, HashMap<String,Color> n) {
     min_w = .6*width;
     min_h = 0;
