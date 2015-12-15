@@ -12,13 +12,13 @@ class BarChart {
   private void clearRegion() {
     fill(255);
     stroke(255);
-    rect(0, 0, .5 * width, height); 
+    rect(0, 0, .6 * width, height); 
   }
   
   private void drawAxes() {
     stroke(0);
     line(x, y, x, (height - margin));
-    line(x, (height - margin), (.5 * width), (height - margin));
+    line(x, (height - margin), (.55 * width), (height - margin));
   }
   
   void display(ArrayList<Country> c, HashMap<String,Color> nats) {
@@ -48,7 +48,7 @@ class BarChart {
     stroke(0);
     //fill(color(100,200,50));
     for (int i = 0; i < c.size(); i++) {
-      float barW = (.5 * width) / c.size();
+      float barW = (.55 * width) / c.size();
       float curr_y = (height - margin);
       float barX = x + (i * barW) + padding;
       for (String n : c.get(i).nationalities.keys()) {
@@ -88,7 +88,7 @@ class BarChart {
     stroke(0);
     int iter = 0;
     for (String i : a.streams.keys()) {
-      float barW = (.5 * width) / a.streams.size();
+      float barW = (.55 * width) / a.streams.size();
       float barX = x + (iter * barW) + padding;
       float barH  = (a.streams.get(i)/max) * ((height - margin) - margin);
       float barY = height - margin - barH;

@@ -4,6 +4,8 @@ String path = "final_data.csv";
 ArrayList <Artist> artists = new ArrayList<Artist>();
 ArrayList <Country> countries = new ArrayList<Country>();
 HashMap<String, Color> nationalities = new HashMap<String, Color>();
+
+float total_w = -1, total_h = -1;
 int artist_clicked;
 int buffer = 10;
 int radius_buffer = 10000;
@@ -41,7 +43,9 @@ BarChart barchart;
 BubbleGraph bg;
 
 void setup() {
-  size(1000,700);
+  total_w = displayWidth;
+  total_h = displayHeight;
+  size((int)total_w, (int)total_h);
   background(255);
   artist_clicked = -1;
   
@@ -147,20 +151,22 @@ void makeArtistsGrey(Country c, String nat) {
 
 void make_key() {
   fill(253, 255, 249, 127);
-  rect(.38 * width, 10, .24 * width, height - 20);
-  float y = 15;
-  float increment = (height - 30)/nationalities.size();
+  rect(.1 * width, 20, .1 * width, 400);
+  float y = 25;
+  float increment = (410)/nationalities.size();
   for (Map.Entry name : nationalities.entrySet()) {
     Color val = (Color)name.getValue();
     fill(val.c);
-    rect(.39 * width, y, .22 * width, y + increment - 2);
+    println(y + increment -2);
+    rect(.11 * width, y, .08 * width, increment - 5);
     String temp = (String)name.getKey();
-    textSize(16);
+    textSize(11);
     textAlign(CENTER);
     fill(0);
-    text(temp, .5 * width, (y + (y+increment))/2);
+    text(temp, .15 * width, (y + (y+increment))/2);
     y += increment;
   }
+  textAlign(LEFT);
 }
 
 void loadStrings() {

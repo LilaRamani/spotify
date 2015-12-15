@@ -12,10 +12,10 @@ class BubbleGraph {
   }
   
   void display(ArrayList<Artist> a, HashMap<String,Color> n) {
-    min_w = .58*width;
+    min_w = .6*width;
     min_h = 0;
     max_w = width;
-    max_h = height - 60;
+    max_h = height - 150;
     Boolean fits = false;
     
     //java.util.Collections.shuffle(a);
