@@ -18,6 +18,7 @@ class BubbleGraph {
     max_h = height - 150;
     Boolean fits = false;
     
+    
     //java.util.Collections.shuffle(a);
     ellipseMode(RADIUS);
     int max = getMax(a);

@@ -24,7 +24,7 @@ class BarChart {
   void display(ArrayList<Country> c, HashMap<String,Color> nats) {
     clearRegion();
     drawAxes();
-    
+    textAlign(BASELINE);
     float max = 0;
     for (int m = 0; m < c.size(); m++) {
       if (c.get(m).total_streams > max) {

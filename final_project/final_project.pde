@@ -12,6 +12,13 @@ int radius_buffer = 10000;
 color highlight = color(255, 255, 153);
 color temp;
 Boolean show_key = false;
+Boolean intro = true;
+Boolean topchart_screen = false;
+Boolean artist_screen = false;
+PImage icon;
+PImage icon2;
+String photo = "../spotify.png";
+String justin = "../justin-bieber.png";
 
 Color [] colors = {
   new Color(color(141,211,199)),
@@ -45,9 +52,12 @@ BubbleGraph bg;
 void setup() {
   total_w = displayWidth;
   total_h = displayHeight;
-  size((int)total_w, (int)total_h);
+  size(displayWidth, displayHeight);
   background(255);
   artist_clicked = -1;
+  
+  icon = loadImage(photo);
+  icon2 = loadImage(justin);
   
   loadStrings();
   frame.setResizable(true);
@@ -58,16 +68,26 @@ void setup() {
 
 void draw() {
   background(255);
-  if (artist_clicked == -1) {
-    barchart.display(countries, nationalities);
+  
+  if (intro) {
+    display_intro();
+  } else if (topchart_screen) {
+    display_topchart_screen();
+  } else if (artist_screen) {
+    display_artist_screen();
   } else {
-    barchart.display(artists.get(artist_clicked), nationalities);
-  }
-  bg.display(artists, nationalities);
-  if (show_key) {
-    make_key();
-  } else {
-    hover();
+  
+    if (artist_clicked == -1) {
+      barchart.display(countries, nationalities);
+    } else {
+      barchart.display(artists.get(artist_clicked), nationalities);
+    }
+    bg.display(artists, nationalities);
+    if (show_key) {
+      make_key();
+    } else {
+      hover();
+    }
   }
 }
 
@@ -96,6 +116,19 @@ void mouseClicked() {
 void keyPressed() {
   if (key == 107) {
     show_key = !show_key;
+  }
+  if (key == 32) {
+    intro = false;
+  }
+  if (key == 110) {
+    topchart_screen = true;
+  }
+  if (key == 98) {
+    topchart_screen = false;
+    artist_screen = false;
+  }
+  if (key == 97) {
+     artist_screen = true;
   }
 }
 
@@ -212,4 +245,46 @@ void loadStrings() {
     artists.get(a_index).addToDict(country, curr_streams);
     countries.get(c_index).addToDict(nationality, curr_streams);
   }
+}
+
+void display_intro() {
+  textSize(32);
+  textAlign(CENTER);
+  fill(color(0));
+  String text1 = "Visualizing Spotify Top Charts";
+  text(text1, width/2, height/4);
+  textSize(20);
+  String text2 = "by Sam Weiser and Lila Ramani";
+  text(text2, width/2, 3*height/4);
+  imageMode(CENTER);
+  image(icon, width/2, height/2);  
+}
+void display_topchart_screen() {
+    textSize(20);
+    textAlign(CENTER);
+    fill(color(0));
+    String text1 = "Which Top Chart is most diverse?";
+    text(text1, width/2, height/4);
+    String text2 = "Spain";
+    text(text2, width/2, height/4 + 30);
+    String text3 = "Which Chart has the most streams?";
+    text(text3, width/2, 2*height/3);
+    String text4 = "USA";
+    text(text4, width/2, 2*height/3 + 30);  
+}
+
+void display_artist_screen() {
+    textSize(20);
+    textAlign(CENTER);
+    fill(color(0));
+    String text1 = "Which artist has the most streams?";
+    text(text1, width/2, height/4);
+    String text2 = "Justin Beiber";
+    text(text2, width/2, height/4 + 30);
+    String text3 = "Which country listens to itself the most?";
+    text(text3, width/2, 2*height/3);
+    String text4 = "France";
+    text(text4, width/2, 2*height/3 + 30); 
+    imageMode(CENTER);
+    image(icon2, width/2, height/2);  
 }
