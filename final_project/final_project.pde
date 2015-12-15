@@ -4,9 +4,9 @@ String path = "final_data.csv";
 ArrayList <Artist> artists = new ArrayList<Artist>();
 ArrayList <Country> countries = new ArrayList<Country>();
 HashMap<String, Color> nationalities = new HashMap<String, Color>();
-Boolean artist_clicked;
+int artist_clicked;
 int buffer = 10;
-int radius_buffer = 20000;
+int radius_buffer = 10000;
 color highlight = color(255, 255, 153);
 color temp;
 Boolean show_key = false;
@@ -20,7 +20,7 @@ Color [] colors = {
   new Color(color(253,180,98)),
   new Color(color(179,222,105)),
   new Color(color(252,205,229)),
-  new Color(color(217,217,217)),
+  new Color(color(217,247,217)),
   new Color(color(188,128,189)),
   new Color(color(204,235,197)),
   new Color(color(255,237,111)),
@@ -43,18 +43,22 @@ BubbleGraph bg;
 void setup() {
   size(1000,700);
   background(255);
-  artist_clicked = false;
+  artist_clicked = -1;
   
   loadStrings();
   frame.setResizable(true);
   barchart = new BarChart(60, 10, .6 * width, height);
-  bg = new BubbleGraph(.5 * width, radius_buffer);
+  bg = new BubbleGraph(radius_buffer);
   //java.util.Collections.shuffle(artists);
 }
 
 void draw() {
   background(255);
-  barchart.display(countries, nationalities);
+  if (artist_clicked == -1) {
+    barchart.display(countries, nationalities);
+  } else {
+    barchart.display(artists.get(artist_clicked), nationalities);
+  }
   bg.display(artists, nationalities);
   if (show_key) {
     make_key();
@@ -65,16 +69,23 @@ void draw() {
 
 void mouseClicked() {
   if (mouseButton == LEFT) {
+    for (int j = 0; j < artists.size(); j++) {
+      if (artists.get(j).in_bounds()) {
+        artist_clicked = j;
+      }
+    }
+    
+    
+    
     for (int i = 0; i < countries.size(); i++) {
       if (mouseX > countries.get(i).x1 && mouseX < countries.get(i).x2) {
         for (Map.Entry name : nationalities.entrySet()) {
           
         }
-        makeArtistsGrey();
       }
     }
   } else {
-    
+    artist_clicked = -1;
   }
 }
 
@@ -85,30 +96,53 @@ void keyPressed() {
 }
 
 void hover() {
+  Boolean found = false;
   for (Map.Entry name : nationalities.entrySet()) {
     color current = get(mouseX, mouseY);
     Color val = (Color)name.getValue();
     if (current == val.c) {
-      textSize(20);
+      found = true;
+      textSize(16);
       fill(0);
       String temp = (String)name.getKey();
-      for (int i = 0; i < countries.size(); i++) {
-        if (mouseX > countries.get(i).x1 && mouseX < countries.get(i).x2) {
-          text(temp + ", " + countries.get(i).nationalities.get(temp), 120, 30);
+      if (artist_clicked == -1) {
+        for (int i = 0; i < countries.size(); i++) {
+          if (mouseX > countries.get(i).x1 && mouseX < countries.get(i).x2) {
+            text(temp + ", " + countries.get(i).nationalities.get(temp), 120, 30);
+            makeArtistsGrey(countries.get(i), temp);
+          }
+        }
+      } else {
+        for (String c : artists.get(artist_clicked).streams.keys()) {
+          
         }
       }
     }
   }
+  if (!found) {
+    for (int k = 0; k < artists.size(); k++) {
+      artists.get(k).is_grey = false;
+    }
+  }
+  
+  
   for (int j = 0; j < artists.size(); j++) {
-    //if it's in the circle
-    //text(artists.get(j).name + ", " + artists.get(j).total_streams, 120, 30);
+    if (artists.get(j).in_bounds()) {
+      textSize(16);
+      fill(0);
+      text(artists.get(j).name + ", " + artists.get(j).total_streams, 120, 30);
+    }
   }
 }
 
-void makeArtistsGrey() {
-  //if they're not in the country (or not in the nationality, I'm too tired to remember which one makes sense
-  //fill(100)
-  //THIS MAYBE BELONGS AS A BOOLEAN IN THE ARTIST CLASS THAT MAKES YOU COLOR YOURSELF GREY
+void makeArtistsGrey(Country c, String nat) {
+  for (int i = 0; i < artists.size(); i++) {
+    if (!(artists.get(i).nationality.equals(nat) && artists.get(i).streams.hasKey(c.id))) {
+      artists.get(i).is_grey = true;
+    } else {
+      artists.get(i).is_grey = false;
+    }
+  }
 }
 
 void make_key() {

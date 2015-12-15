@@ -31,7 +31,6 @@ class BarChart {
         max = c.get(m).total_streams;
       }
     }
-    //println("MAX = " + max);
     //Display y axis marks
     int marker = 20000000;
     for (float j = 1; j <= 7; j++) {
@@ -43,7 +42,7 @@ class BarChart {
     }
     
     
-    //java.util.Collections.sort(c);
+    java.util.Collections.sort(c);
     
     float padding = width * .002;
     stroke(0);
@@ -70,6 +69,44 @@ class BarChart {
       popMatrix();
     }
     
+  }
+  
+  void display(Artist a, HashMap<String,Color> n) {
+    clearRegion();
+    drawAxes();
+    
+    a.streams.sortKeys();
+    
+    float max = 0;
+    for (String m : a.streams.keys()) {
+      if (a.streams.get(m) > max) {
+        max = a.streams.get(m);
+      }
+    }
+    
+    float padding = width * .002;
+    stroke(0);
+    int iter = 0;
+    for (String i : a.streams.keys()) {
+      float barW = (.5 * width) / a.streams.size();
+      float barX = x + (iter * barW) + padding;
+      float barH  = (a.streams.get(i)/max) * ((height - margin) - margin);
+      float barY = height - margin - barH;
+      fill(n.get(a.nationality).c);
+      rect(barX, barY, barW - padding, barH);
+      a.setX(barX, barX + barW - padding); 
+      
+      //draw x labels
+      float currMidPoint = x + (iter * barW) + (barW/4);
+      textSize(10);
+      fill(0);
+      pushMatrix();
+      translate(currMidPoint, height - 19);
+      rotate(radians(15));
+      text(i, 0, 0);
+      popMatrix();
+      iter++;
+    }
   }
   
   
